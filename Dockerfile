@@ -10,4 +10,4 @@ RUN apt-get update && apt-get install -y \
 
 USER guiwebuser
 
-CMD ["run_app", "picard"]
+CMD ["start", "picard"]
