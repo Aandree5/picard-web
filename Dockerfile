@@ -8,6 +8,6 @@ RUN apt-get update && apt-get install -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-USER guiuser
+USER guiwebuser
 
-CMD ["/home/guiuser/entrypoint.sh", "picard"]
+CMD ["run_app", "picard"]
