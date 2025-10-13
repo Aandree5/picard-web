@@ -19,4 +19,14 @@ xpra start $XPRA_DISPLAY \
     --daemon=no \
     --socket-dir="/home/picarduser/.xpra" \
     --session-name=picard-session \
-    --start=picard
+    --start=picard & XPRA_PID=$!
+
+sleep 5
+
+while kill -0 $XPRA_PID 2>/dev/null; do
+    if ! pgrep -u picarduser -x picard >/dev/null; then
+        echo "Picard not running, restarting..."
+        xpra control :100 start picard
+    fi
+    sleep 2
+done
