@@ -10,4 +10,8 @@ RUN apt-get update && apt-get install -y \
 
 USER guiwebuser
 
+# Check if Picard is running
+HEALTHCHECK --interval=30s --timeout=10s --start-period=10s --retries=3 \
+    CMD pgrep -x picard || exit 1
+
 CMD ["start", "picard"]
