@@ -2,12 +2,14 @@ FROM aandree5/gui-web-base:latest
 
 USER root
 
+RUN set_webpage_title "MusicBrainz Picard Web"
+
 RUN apt-get update && apt-get install -y \
     picard  \
     && apt-get autoremove \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
-
+    
 USER guiwebuser
 
 # Check if Picard is running
