@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM aandree5/gui-web-base:v1.5.1
+FROM aandree5/gui-web-base:v1.5.2
 
 LABEL org.opencontainers.image.authors="Aandree5" \
     org.opencontainers.image.license="Apache-2.0" \
@@ -23,7 +23,7 @@ LABEL org.opencontainers.image.authors="Aandree5" \
 # Directories for upstream image to set the correct permissions
 # `$GWB_HOME/.config/MusicBrainz` is here just so permissions are correct for first run,
 # need it form symlink below, and it's created by root so needs permissions fixed for picard
-ENV APP_DIRS="/pw $GWB_HOME/.config/MusicBrainz"
+ENV APP_DIRS="/pw"
 
 RUN apt-get update \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y \
@@ -33,10 +33,8 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-RUN mkdir -p /pw/config \
-    && mkdir -p $GWB_HOME/.config/MusicBrainz \
-    && ln -s /pw/config $GWB_HOME/.config/MusicBrainz \
-    && mkdir -p /pw/plugins
+RUN mkdir /pw \
+    && ln -s $GWB_HOME/.config/MusicBrainz/Picard/plugins /pw/plugins
 
 # Check if Picard is running
 HEALTHCHECK --interval=30s --timeout=10s --start-period=10s --retries=3 \
