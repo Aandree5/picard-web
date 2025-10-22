@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM aandree5/gui-web-base:v1.5.2
+FROM aandree5/gui-web-base:v1.5.3
 
 LABEL org.opencontainers.image.authors="Aandree5" \
     org.opencontainers.image.license="Apache-2.0" \
@@ -28,7 +28,6 @@ ENV APP_DIRS="/pw"
 RUN apt-get update \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y \
     picard  \
-    xterm \
     && apt-get autoremove -y --purge \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
@@ -40,4 +39,4 @@ RUN mkdir /pw \
 HEALTHCHECK --interval=30s --timeout=10s --start-period=10s --retries=3 \
     CMD pgrep -x picard || exit 1
 
-CMD ["start-app", "xterm"]
+CMD ["start-app", "picard"]
