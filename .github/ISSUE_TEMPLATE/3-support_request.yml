@@ -1,0 +1,59 @@
+name: 🛠️ Support Request
+description: Get help with setup, usage, or troubleshooting
+title: "[Support]: "
+labels: [question]
+assignees:
+  - Aandree5
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Need help? You're in the right place. Please provide as much detail as possible so we can assist you effectively.
+
+  - type: input
+    id: description
+    attributes:
+      label: Description of the Issue
+      placeholder: "Can't access GUI after container starts"
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Context & Setup
+      description: Describe your environment and what you're trying to achieve
+      placeholder: |
+        Running on Ubuntu 22.04 with Docker 24.0.2. Trying to launch GUI in Chrome 117.
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs & Output
+      description: Paste any relevant terminal output, error messages, or screenshots
+      placeholder: |
+        Container starts, but browser shows "502 Bad Gateway". No errors in Docker logs.
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps Taken
+      description: What have you tried so far?
+      placeholder: |
+        - Verified container is running
+        - Checked port mapping
+        - Restarted browser and container
+
+  - type: dropdown
+    id: urgency
+    attributes:
+      label: Urgency Level
+      description: How critical is this issue to your workflow?
+      default: 1
+      multiple: false
+      options:
+        - 🔵 Low - Minor inconvenience
+        - 🟡 Medium - Affects productivity
+        - 🔴 High - Blocking progress
