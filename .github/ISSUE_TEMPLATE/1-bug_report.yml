@@ -1,0 +1,56 @@
+name: 🐞 Bug Report
+description: Report an reproducible issue with the project
+title: "[Bug]: "
+labels: [bug]
+assignees:
+  - Aandree5
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting a bug! Please fill out the details below to help us reproduce and fix it.
+
+  - type: input
+    id: description
+    attributes:
+      label: Description of the Issue
+      description: Brief description of the issue
+      placeholder: "App crashes when clicking scan"
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to Reproduce
+      description: Include exact steps, commands, or URLs
+      placeholder: |
+        1. Run default container with `docker run -p 5005:5005 ...`
+        2. Add folder with music files
+        3. Open browser and click "Scan"
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Behavior
+      placeholder: "App should start scanning files"
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual Behavior
+      placeholder: "App windows closes unexpectedly"
+
+  - type: input
+    id: env
+    attributes:
+      label: Environment
+      placeholder: "Picard Web v1.0.0, Docker 24.0.2 on Ubuntu 22.04, Chrome 117"
+
+  - type: textarea
+    id: suggestion
+    attributes:
+      label: Possible Fix / Suggestion
+      placeholder: "Maybe fails when no music files are found?"

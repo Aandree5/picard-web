@@ -1,0 +1,50 @@
+name: Validate Pull Request
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  pre-commit-check:
+    name: Pre-commit License Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.x"
+
+      - name: Install pre-commit
+        run: pip install pre-commit
+
+      - name: Run pre-commit hooks
+        run: pre-commit run --all-files
+
+  docker-build-healthcheck:
+    name: Docker Build & Healthcheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Build Docker image
+        run: docker build -t picard-web .
+
+      - name: Run container
+        run: docker run -d --name picard-web-test -p 5005:5005 picard-web
+
+      - name: Wait for healthcheck to pass
+        run: |
+          for i in {1..10}; do
+            STATUS=$(docker inspect --format='{{json .State.Health.Status}}' picard-web-test)
+            echo "Health status: $STATUS"
+            if [ "$STATUS" == "\"healthy\"" ]; then
+              echo "Container is healthy."
+              exit 0
+            fi
+            sleep 5
+          done
+          echo "Container did not become healthy in time."
+          docker logs picard-web-test
+          exit 1
