@@ -1,7 +1,7 @@
-# GUI Web Base
+# Picard Web
 
 <div align="center">
-  <img src="https://raw.githubusercontent.com/Aandree5/gui-web-base/refs/heads/main/images/logo_128.png" alt="Logo" />
+  <img src="https://raw.githubusercontent.com/Aandree5/picard-web/refs/heads/main/images/logo_128.png" alt="Logo" />
   
   <b>Thank you for your contribution.  Please ensure your pull request meets the requirements in the checklist below.</b>
 </div>
