@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM aandree5/gui-web-base:v1.5.3
+FROM aandree5/gui-web-base:v1.5.6
 
 LABEL org.opencontainers.image.authors="Aandree5" \
     org.opencontainers.image.license="Apache-2.0" \
@@ -35,8 +35,11 @@ RUN apt-get update \
 RUN mkdir /pw \
     && ln -s $GWB_HOME/.config/MusicBrainz/Picard/plugins /pw/plugins
 
-# Check if Picard is running
+# Container healthcheck
+COPY scripts/healthcheck.sh /pw/healthcheck.sh
+RUN chmod +x /pw/healthcheck.sh
+
 HEALTHCHECK --interval=30s --timeout=10s --start-period=10s --retries=3 \
-    CMD pgrep -x picard || exit 1
+  CMD /pw/healthcheck.sh
 
 CMD ["start-app", "picard"]
