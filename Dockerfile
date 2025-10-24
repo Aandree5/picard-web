@@ -1,19 +1,45 @@
-FROM aandree5/gui-web-base:latest
+# Copyright 2025 André Silva
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 
-USER root
+FROM aandree5/gui-web-base:v1.5.6
 
-RUN set_webpage_title "MusicBrainz Picard Web"
+LABEL org.opencontainers.image.authors="Aandree5" \
+    org.opencontainers.image.license="Apache-2.0" \
+    org.opencontainers.image.url="https://github.com/Aandree5/picard-web" \
+    org.opencontainers.image.title="Picard Web" \
+    org.opencontainers.image.description="Image to run MusicBrainz Picard in the browser"
 
-RUN apt-get update && apt-get install -y \
+# Directories for upstream image to set the correct permissions
+# `$GWB_HOME/.config/MusicBrainz` is here just so permissions are correct for first run,
+# need it form symlink below, and it's created by root so needs permissions fixed for picard
+ENV APP_DIRS="/pw"
+
+RUN apt-get update \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y \
     picard  \
-    && apt-get autoremove \
+    && apt-get autoremove -y --purge \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
-    
-USER guiwebuser
 
-# Check if Picard is running
+RUN mkdir /pw \
+    && ln -s $GWB_HOME/.config/MusicBrainz/Picard/plugins /pw/plugins
+
+# Container healthcheck
+COPY scripts/healthcheck.sh /pw/healthcheck.sh
+RUN chmod +x /pw/healthcheck.sh
+
 HEALTHCHECK --interval=30s --timeout=10s --start-period=10s --retries=3 \
-    CMD pgrep -x picard || exit 1
+  CMD /pw/healthcheck.sh
 
-CMD ["start", "picard"]
+CMD ["start-app", "picard"]

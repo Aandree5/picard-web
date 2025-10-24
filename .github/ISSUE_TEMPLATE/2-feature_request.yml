@@ -1,0 +1,33 @@
+name: ✨ Feature Request
+description: Suggest an enhancement or new capability
+title: "[Request]: "
+labels: [enhancement]
+assignees:
+  - Aandree5
+body:
+  - type: markdown
+    attributes:
+      value: |
+        We appreciate your input! Suggestions that enhance how the app works, looks, or feels are always welcome.
+
+  - type: input
+    id: description
+    attributes:
+      label: Description of the Feature
+      placeholder: "Expose container hostname in browser UI"
+    validations:
+      required: true
+
+  - type: textarea
+    id: motivation
+    attributes:
+      label: Motivation
+      placeholder: |
+        Helps users identify which container they're interacting with when running multiple apps.
+
+  - type: textarea
+    id: implementation
+    attributes:
+      label: Proposed Implementation
+      placeholder: |
+        Modify `set_webpage_title` to optionally include `Hostname` as an optional parameter.
