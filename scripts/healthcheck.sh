@@ -18,11 +18,11 @@
 # 3. Exit with status 1 if any of the checks fail
 
 if ! pgrep -x picard >/dev/null; then
-  echo "Picard is not running"
-  exit 1
+    echo "Picard is not running"
+    exit 1
 fi
 
 if ! /gwb/healthcheck.sh; then
-  echo "GUI Web Base healthcheck failed"
-  exit 1
+    echo "GUI Web Base healthcheck failed"
+    exit 1
 fi

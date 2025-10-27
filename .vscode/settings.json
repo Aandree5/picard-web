@@ -5,12 +5,16 @@
         "Buildx",
         "fulcio",
         "healthcheck",
+        "lrcget",
+        "lrclib",
         "noninteractive",
         "opencontainers",
         "PGID",
         "pgrep",
         "PUID",
         "Rekor",
+        "replaygain",
+        "rsgain",
         "sigstore"
     ]
 }

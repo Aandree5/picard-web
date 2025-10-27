@@ -20,12 +20,25 @@ Picard Web is a containerized, browser-accessible version of [MusicBrainz Picard
 This project is not affiliated with, endorsed by, or officially supported by the [MetaBrainz Foundation](https://metabrainz.org/) or the [MusicBrainz Picard](https://picard.musicbrainz.org/) team.  
 Picard Web is an independent wrapper designed to make Picard accessible via a browser-based container. All trademarks and copyrights remain the property of their respective owners.
 
-## 🚀 Features
+## ⚡ Features
 
-- **Smart tagging** - powered by the MusicBrainz database
-- **Accessible via browser** — no install required, works anywhere
+- **Tag with MusicBrainz** - rich metadata, fast lookups
+- **Run in browser** - no install, works anywhere
+- **ReplayGain tagging** - loudness metadata for consistent playback
+- **Lyrics fetching** - synced lyrics via LRCLib
+- **Clipboard support** - copy and paste between Picard and browser
+- **Link handling** - open URLs directly from Picard
 
-## 🛠️ Getting Started
+## 🧩 Image Variants
+
+Picard Web publishes two Docker image variants:
+
+| Variant   | Description                                                          |
+| --------- | -------------------------------------------------------------------- |
+| `minimal` | Contains only the core Picard application                            |
+| `full`    | Includes Picard plus additional plugins and their required libraries |
+
+## 🚀 Getting Started
 
 ```bash
 docker run -p 80:80 -p 443:443 aandree5/picard-web
@@ -33,18 +46,27 @@ docker run -p 80:80 -p 443:443 aandree5/picard-web
 
 > Then open `https://localhost` in your browser.
 
+## 🔌 Included Plugins
+
+The `full` variant bundles several plugins to enhance tagging workflows.
+
+- **ReplayGain 2.0** - scans audio files to calculate ReplayGain values
+- **Lyrics (LRCLib)** - fetches synchronized lyrics from LRCLib
+
+> These plugins are installed but **not activated by default**, they must be enabled in Picard's settings.
+
 ## 🏷️ Versioning & Tags
 
 This project follows [Semantic Versioning](https://semver.org/) and uses automated releases.
 
 ## Tag Overview
 
-| Format                     | Example  | Description                                             |
-| -------------------------- | -------- | ------------------------------------------------------- |
-| `latest`                   | -        | Always the newest, may include breaking changes.        |
-| `v<major>`                 | `v1`     | Latest stable for a major version. No breaking changes. |
-| `v<major>.<minor>`         | `v1.1`   | Latest patch for a minor version. No new featues.       |
-| `v<major>.<minor>.<patch>` | `v1.1.0` | Fixed version, only changes if manually updated.        |
+| Format                               | Example        | Description                                                                   |
+| ------------------------------------ | -------------- | ----------------------------------------------------------------------------- |
+| `<variant>-latest`                   | `full-latest`  | Always the newest, of the given variant, may include breaking changes.        |
+| `<variant>-v<major>`                 | `minimal-v1`   | Latest stable for a major version, of the given variant. No breaking changes. |
+| `<variant>-v<major>.<minor>`         | `minimal-v1.1` | Latest patch for a minor version, of the given variant. No new featues.       |
+| `<variant>-v<major>.<minor>.<patch>` | `full-v1.1.0`  | Fixed version, of the given variant, only changes if manually updated.        |
 
 ## 🛠️ Contributing
 
@@ -76,7 +98,7 @@ Contributions are welcome! Please follow these steps to get set up:
 
 4. **Open a Pull Request** against `main`.
 
-## 🧰 Tech Stack
+## 📦 Tech Stack
 
 - [**GUI Web Base**](https://github.com/aandre5/gui-web-base)  
   Containerized browser GUI foundation
@@ -84,14 +106,21 @@ Contributions are welcome! Please follow these steps to get set up:
 - [**MusicBrainz Picard**](https://github.com/metabrainz/picard)  
   Music tagging software from MusicBrainz
 
+- [**rsgain**](https://github.com/complexlogic/rsgain)  
+  ReplayGain 2.0 tagging utility
+
 ## 📄 License
 
 This project wraps [MusicBrainz Picard](https://github.com/metabrainz/picard), which is licensed under the [GPLv2](https://www.gnu.org/licenses/old-licenses/gpl-2.0.html).  
 Picard Web itself is released under the [Apache 2.0 License](./LICENSE).
 
-## 🤝 Acknowledgements
+## 🙌 Credits & Dependencies
 
-- Thanks to the [MetaBrainz Foundation](https://metabrainz.org/) for MusicBrainz and MusicBrainz Picard
+Picard Web builds on the work of several open-source projects. Huge thanks to these upstream tools and communities:
+
+- [MusicBrainz Picard](https://github.com/metabrainz/picard) - the core music tagging engine
+- [rsgain](https://github.com/complexlogic/rsgain) - ReplayGain 2.0 tagging utility
+- [picard-lrclib](https://github.com/izaz4141/picard-lrclib) - lyrics plugin powered by LRCLib
 
 ## 📚 Resources
 

@@ -13,8 +13,9 @@
 
 - [ ] Docker image builds and runs successfully (`docker build`, `docker run`)
 - [ ] Pre-commit hooks pass
-- [ ] Follows [Conventional Commits](https://www.conventionalcommits.org/)
 - [ ] Docs updated (if applicable)
+
+> Please aim to follow Conventional Commits for clarity and consistency, as this helps reviewers and future contributors understand changes at a glance. No worries if a few commits stray from the format, everything gets squashed when merged.
 
 ## Related Issues / PRs
 <!-- Link to any related discussions -->
