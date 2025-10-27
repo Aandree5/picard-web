@@ -63,7 +63,7 @@ This project follows [Semantic Versioning](https://semver.org/) and uses automat
 
 | Format                               | Example        | Description                                                                   |
 | ------------------------------------ | -------------- | ----------------------------------------------------------------------------- |
-| `<variant>-latest`                   | `full-latest`  | Always the newest, of the given variant, may include breaking changes.        |
+| `latest`                             | -              | Always the newest (`full` variant), may include breaking changes.               |
 | `<variant>-v<major>`                 | `minimal-v1`   | Latest stable for a major version, of the given variant. No breaking changes. |
 | `<variant>-v<major>.<minor>`         | `minimal-v1.1` | Latest patch for a minor version, of the given variant. No new featues.       |
 | `<variant>-v<major>.<minor>.<patch>` | `full-v1.1.0`  | Fixed version, of the given variant, only changes if manually updated.        |
