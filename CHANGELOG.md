@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.0](https://github.com/Aandree5/picard-web/compare/v0.1.0...v0.2.0) (2025-10-27)
+
+
+### Features
+
+* added `rsgain` and `picard-lyrics` ([#9](https://github.com/Aandree5/picard-web/issues/9)) ([a1f0aad](https://github.com/Aandree5/picard-web/commit/a1f0aad01c5a395a9ac5124832bd138076f98297))
+
 ## [0.1.0](https://github.com/Aandree5/picard-web/compare/v0.0.1...v0.1.0) (2025-10-24)
 
 
