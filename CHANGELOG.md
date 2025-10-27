@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.1](https://github.com/Aandree5/picard-web/compare/v1.0.0...v1.0.1) (2025-10-27)
+
+
+### Bug Fixes
+
+* `latest` tag to point to `full` variant ([#12](https://github.com/Aandree5/picard-web/issues/12)) ([8f8e143](https://github.com/Aandree5/picard-web/commit/8f8e143518cb1a165581a2a27351da51dcd5979b))
+
 ## [1.0.0](https://github.com/Aandree5/picard-web/compare/v0.1.0...v1.0.0) (2025-10-27)
 
 
