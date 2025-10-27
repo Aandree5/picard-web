@@ -1,6 +1,6 @@
 # Changelog
 
-## [0.2.0](https://github.com/Aandree5/picard-web/compare/v0.1.0...v0.2.0) (2025-10-27)
+## [1.0.0](https://github.com/Aandree5/picard-web/compare/v0.1.0...v1.0.0) (2025-10-27)
 
 
 ### Features
