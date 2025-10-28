@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/Aandree5/picard-web/compare/v1.1.0...v1.2.0) (2025-10-28)
+
+
+### Features
+
+* updated `gui-web-base` ([#16](https://github.com/Aandree5/picard-web/issues/16)) ([534d463](https://github.com/Aandree5/picard-web/commit/534d4635688f560d45a6613fb947b085b7679545))
+
 ## [1.1.0](https://github.com/Aandree5/picard-web/compare/v1.0.1...v1.1.0) (2025-10-27)
 
 
