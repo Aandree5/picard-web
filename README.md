@@ -53,7 +53,7 @@ The `full` variant bundles several plugins to enhance tagging workflows.
 - **ReplayGain 2.0** - scans audio files to calculate ReplayGain values
 - **Lyrics (LRCLib)** - fetches synchronized lyrics from LRCLib
 
-> These plugins are installed but **not activated by default**, they must be enabled in Picard's settings.
+> These plugins come pre-installed and are enabled with their default configurations.
 
 ## 🏷️ Versioning & Tags
 

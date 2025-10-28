@@ -74,6 +74,11 @@ RUN git clone https://github.com/izaz4141/picard-lrclib /tmp/lrclib \
     && (cd /tmp && zip -r /picard-web/MusicBrainz/Picard/plugins/lrclib.zip lrclib -x "lrclib/.git" "lrclib/readme") \
     && rm -rf /tmp/lrclib
 
+# Enable plugins
+RUN echo "[setting]\nenabled_plugins=lrclib, replaygain2" > "$GWB_HOME/.config/MusicBrainz/Picard.ini" \
+    && chown $PUID:$PGID "$GWB_HOME/.config/MusicBrainz/Picard.ini"
+
+
 RUN apt-get remove -y \
     git \
     zip \
