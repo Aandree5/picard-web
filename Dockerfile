@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM aandree5/gui-web-base:v1.7.0 AS minimal
+FROM aandree5/gui-web-base:v1.8.1 AS minimal
 
 LABEL org.opencontainers.image.authors="Aandree5" \
     org.opencontainers.image.license="Apache-2.0" \
@@ -21,9 +21,12 @@ LABEL org.opencontainers.image.authors="Aandree5" \
     org.opencontainers.image.description="Image to run MusicBrainz Picard in the browser"
 
 # Directories for upstream image to set the correct permissions
-# `$GWB_HOME/.config/MusicBrainz` is here to make sure permissions are correct
-# even if the UID and GID have not changed
-ENV APP_DIRS="/pw $GWB_HOME/.config/MusicBrainz"
+# `pw` for image required scripts and files
+# `picard-web` for user to persist
+ENV APP_DIRS="/pw /picard-web"
+
+EXPOSE 5000
+EXPOSE 5443
 
 RUN apt-get update \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y \
@@ -44,7 +47,7 @@ RUN chmod +x /pw/healthcheck.sh
 HEALTHCHECK --interval=30s --timeout=10s --start-period=10s --retries=3 \
     CMD /pw/healthcheck.sh
 
-CMD ["start-app", "picard"]
+CMD ["start-app", "--title", "Picard Web", "picard"]
 
 FROM minimal AS full
 

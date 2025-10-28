@@ -41,7 +41,7 @@ Picard Web publishes two Docker image variants:
 ## 🚀 Getting Started
 
 ```bash
-docker run -p 80:80 -p 443:443 aandree5/picard-web
+docker run -p 80:5000 -p 443:5443 aandree5/picard-web
 ```
 
 > Then open `https://localhost` in your browser.
