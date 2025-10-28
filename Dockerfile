@@ -35,10 +35,13 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-RUN mkdir /pw \
-    && mkdir -p $GWB_HOME/.config/MusicBrainz/Picard/plugins \
-    && ln -s $GWB_HOME/.config/MusicBrainz/Picard/plugins /pw/plugins \
-    && mkdir /pw/backups
+RUN mkdir /picard-web \
+    && chown $PUID:$PGID /picard-web \
+    && mkdir -p $GWB_HOME/.config/MusicBrainz \
+    && chown $PUID:$PGID $GWB_HOME/.config/MusicBrainz \
+    && ln -s $GWB_HOME/.config/MusicBrainz /picard-web/MusicBrainz \
+    && mkdir /picard-web/backups \
+    && chown $PUID:$PGID /picard-web/backups
 
 # Container healthcheck
 COPY scripts/healthcheck.sh /pw/healthcheck.sh
@@ -57,15 +60,18 @@ RUN apt-get update \
     git \
     zip
 
+RUN mkdir -p /picard-web/MusicBrainz/Picard/plugins \
+    && chown $PUID:$PGID /picard-web/MusicBrainz/Picard/plugins
+
 # Install ReplayGain2 plugin (https://github.com/metabrainz/picard-plugins)
 RUN git clone https://github.com/metabrainz/picard-plugins /tmp/picard-plugins \
-    && (cd /tmp/picard-plugins/plugins && zip -r /pw/plugins/replaygain2.zip replaygain2) \
+    && (cd /tmp/picard-plugins/plugins && zip -r /picard-web/MusicBrainz/Picard/plugins/replaygain2.zip replaygain2) \
     && rm -rf /tmp/picard-plugins
 
 # Install lyrics plugin (https://github.com/izaz4141/picard-lrclib)
 RUN git clone https://github.com/izaz4141/picard-lrclib /tmp/lrclib \
     && mv /tmp/lrclib/lrcget.py /tmp/lrclib/__init__.py \
-    && (cd /tmp && zip -r /pw/plugins/lrclib.zip lrclib -x "lrclib/.git" "lrclib/readme") \
+    && (cd /tmp && zip -r /picard-web/MusicBrainz/Picard/plugins/lrclib.zip lrclib -x "lrclib/.git" "lrclib/readme") \
     && rm -rf /tmp/lrclib
 
 RUN apt-get remove -y \
