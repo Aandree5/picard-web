@@ -32,7 +32,7 @@ jobs:
         run: docker build -t picard-web .
 
       - name: Run container
-        run: docker run -d --name picard-web-test -p 5005:5005 picard-web
+        run: docker run -d --name picard-web-test picard-web
 
       - name: Wait for healthcheck to pass
         run: |
