@@ -63,6 +63,7 @@ RUN mkdir -p $GWB_HOME/.config/MusicBrainz/Picard/plugins \
 # Install ReplayGain2 plugin (https://github.com/metabrainz/picard-plugins)
 RUN git clone https://github.com/metabrainz/picard-plugins /tmp/picard-plugins \
     && (cd /tmp/picard-plugins/plugins && zip -r $GWB_HOME/.config/MusicBrainz/Picard/plugins/replaygain2.zip replaygain2) \
+    && (cd /tmp/picard-plugins/plugins && zip -r $GWB_HOME/.config/MusicBrainz/Picard/plugins/acousticbrainz.zip acousticbrainz) \
     && rm -rf /tmp/picard-plugins
 
 # Install lyrics plugin (https://github.com/izaz4141/picard-lrclib)
@@ -72,7 +73,7 @@ RUN git clone https://github.com/izaz4141/picard-lrclib /tmp/lrclib \
     && rm -rf /tmp/lrclib
 
 # Enable plugins
-RUN echo "[setting]\nenabled_plugins=lrclib, replaygain2" > "$GWB_HOME/.config/MusicBrainz/Picard.ini" \
+RUN echo "[setting]\nenabled_plugins=lrclib, replaygain2, acousticbrainz" > "$GWB_HOME/.config/MusicBrainz/Picard.ini" \
     && chown $PUID:$PGID "$GWB_HOME/.config/MusicBrainz/Picard.ini"
 
 RUN apt-get remove -y \

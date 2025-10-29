@@ -52,6 +52,7 @@ The `full` variant bundles several plugins to enhance tagging workflows.
 
 - **ReplayGain 2.0** - scans audio files to calculate ReplayGain values
 - **Lyrics (LRCLib)** - fetches synchronized lyrics from LRCLib
+- **AcousticBrainz Tags** - highlevel classifiers and tonal/rhythm tags from the AcousticBrainz database
 
 > These plugins come pre-installed and are enabled with their default configurations.
 
