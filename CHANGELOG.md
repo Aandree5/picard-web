@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.3.0](https://github.com/Aandree5/picard-web/compare/v1.2.0...v1.3.0) (2025-10-29)
+
+
+### Features
+
+* added `acousticbrainz` plugin ([#23](https://github.com/Aandree5/picard-web/issues/23)) ([42111a3](https://github.com/Aandree5/picard-web/commit/42111a34bb135506e56252b9dcef23858f622a91))
+
+
+### Bug Fixes
+
+* `picard-web` being overwritten by host empty folder ([#21](https://github.com/Aandree5/picard-web/issues/21)) ([7c602d5](https://github.com/Aandree5/picard-web/commit/7c602d59ae7eae7332c7ed1f0a2c0a825ca07ba8))
+
 ## [1.2.0](https://github.com/Aandree5/picard-web/compare/v1.1.0...v1.2.0) (2025-10-28)
 
 
