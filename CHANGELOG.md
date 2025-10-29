@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.3](https://github.com/Aandree5/picard-web/compare/v1.3.2...v1.3.3) (2025-10-29)
+
+
+### Bug Fixes
+
+* binding to `picard-web` clearing folder build time config ([#28](https://github.com/Aandree5/picard-web/issues/28)) ([b18e31c](https://github.com/Aandree5/picard-web/commit/b18e31ca515b9a11dfc4a0996311c2817b582450))
+
 ## [1.3.2](https://github.com/Aandree5/picard-web/compare/v1.3.1...v1.3.2) (2025-10-29)
 
 
