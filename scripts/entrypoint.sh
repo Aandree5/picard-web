@@ -21,8 +21,22 @@ create_directory_if_missing(){
     fi
 }
 
+# Create folder for backups
 create_directory_if_missing "/picard-web/backups"
 
+# When loading new configuration (from options > maintenance),
+# picard will take a backup of the current configuration and try
+# to save it to /home/gwb/Documents, create a link to the backups
+# folder created above
+if [ ! -L "$GWB_HOME/Documents" ];then
+    if [ -d "$GWB_HOME/Documents" ]; then
+        rm -rf "$GWB_HOME/Documents"
+    fi
+    
+    ln -s /picard-web/backups $GWB_HOME/Documents
+fi
+
+# Link picard folder for persistence
 if [ ! -f /picard-web/MusicBrainz ]; then
     create_directory_if_missing "$GWB_HOME/.config/MusicBrainz"
     ln -s $GWB_HOME/.config/MusicBrainz /picard-web/MusicBrainz
