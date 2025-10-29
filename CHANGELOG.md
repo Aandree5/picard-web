@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.2](https://github.com/Aandree5/picard-web/compare/v1.3.1...v1.3.2) (2025-10-29)
+
+
+### Bug Fixes
+
+* picard trying to auto save configuration in an invalid location ([#26](https://github.com/Aandree5/picard-web/issues/26)) ([9d372da](https://github.com/Aandree5/picard-web/commit/9d372da6f8830d10d9ce44b002b5218efea3a99a))
+
 ## [1.3.1](https://github.com/Aandree5/picard-web/compare/v1.3.0...v1.3.1) (2025-10-29)
 
 
