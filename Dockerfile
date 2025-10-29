@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM aandree5/gui-web-base:v1.8.1 AS minimal
+FROM aandree5/gui-web-base:v1.8.2 AS minimal
 
 LABEL org.opencontainers.image.authors="Aandree5" \
     org.opencontainers.image.license="Apache-2.0" \
