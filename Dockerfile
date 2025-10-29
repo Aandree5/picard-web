@@ -35,6 +35,16 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
+RUN mkdir -p /picard-web/MusicBrainz \
+    mkdir -p $GWB_HOME/.config \
+    # Link picard config files so that source of truth is /picard-web/MusicBrainz
+    && ln -sfn /picard-web/MusicBrainz $GWB_HOME/.config/MusicBrainz \
+    # When loading new configuration (from options > maintenance),
+    # picard will take a backup of the current configuration and try
+    # to save it to /home/gwb/Documents, create a link for persistence
+    && mkdir /picard-web/backups \
+    && ln -sfn /picard-web/backups $GWB_HOME/Documents
+
 # Overriding entrypoint
 COPY scripts/entrypoint.sh /pw/entrypoint.sh
 RUN chmod +x /pw/entrypoint.sh
@@ -57,24 +67,27 @@ RUN apt-get update \
     git \
     zip
 
-RUN mkdir -p $GWB_HOME/.config/MusicBrainz/Picard/plugins \
-    && chown -R $PUID:$PGID $GWB_HOME/.config/MusicBrainz
-
-# Install ReplayGain2 plugin (https://github.com/metabrainz/picard-plugins)
-RUN git clone https://github.com/metabrainz/picard-plugins /tmp/picard-plugins \
-    && (cd /tmp/picard-plugins/plugins && zip -r $GWB_HOME/.config/MusicBrainz/Picard/plugins/replaygain2.zip replaygain2) \
-    && (cd /tmp/picard-plugins/plugins && zip -r $GWB_HOME/.config/MusicBrainz/Picard/plugins/acousticbrainz.zip acousticbrainz) \
-    && rm -rf /tmp/picard-plugins
-
-# Install lyrics plugin (https://github.com/izaz4141/picard-lrclib)
-RUN git clone https://github.com/izaz4141/picard-lrclib /tmp/lrclib \
+RUN mkdir -p /picard-web/MusicBrainz/Picard/plugins \
+    # Install official plugin (https://github.com/metabrainz/picard-plugins)
+    && git clone https://github.com/metabrainz/picard-plugins /tmp/picard-plugins \
+    && (cd /tmp/picard-plugins/plugins && zip -r /picard-web/MusicBrainz/Picard/plugins/replaygain2.zip replaygain2) \
+    && (cd /tmp/picard-plugins/plugins && zip -r /picard-web/MusicBrainz/Picard/plugins/acousticbrainz.zip acousticbrainz) \
+    && rm -rf /tmp/picard-plugins \
+    # Install lyrics plugin (https://github.com/izaz4141/picard-lrclib)
+    && git clone https://github.com/izaz4141/picard-lrclib /tmp/lrclib \
     && mv /tmp/lrclib/lrcget.py /tmp/lrclib/__init__.py \
-    && (cd /tmp && zip -r $GWB_HOME/.config/MusicBrainz/Picard/plugins/lrclib.zip lrclib -x "lrclib/.git" "lrclib/readme") \
-    && rm -rf /tmp/lrclib
+    && (cd /tmp && zip -r /picard-web/MusicBrainz/Picard/plugins/lrclib.zip lrclib -x "lrclib/.git" "lrclib/readme") \
+    && rm -rf /tmp/lrclib \
+    # Enable plugins
+    && echo "[setting]\nenabled_plugins=lrclib, replaygain2, acousticbrainz" > "/picard-web/MusicBrainz/Picard.ini"
 
-# Enable plugins
-RUN echo "[setting]\nenabled_plugins=lrclib, replaygain2, acousticbrainz" > "$GWB_HOME/.config/MusicBrainz/Picard.ini" \
-    && chown $PUID:$PGID "$GWB_HOME/.config/MusicBrainz/Picard.ini"
+# Set permissions
+RUN chown -R "$PUID:$PGID" /picard-web \
+    # Backup initial config so to be restored in case a bind is created on picard-web folder,
+    # as binding to a host dir will always take the host as the source and thus clear picard-web folder,
+    # entrypoint can then restore if needed
+    && mkdir /pw/initial \
+    && cp -a /picard-web/. /pw/initial/
 
 RUN apt-get remove -y \
     git \
