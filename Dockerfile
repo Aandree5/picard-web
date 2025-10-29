@@ -35,13 +35,9 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-RUN mkdir /picard-web \
-    && chown $PUID:$PGID /picard-web \
-    && mkdir -p $GWB_HOME/.config/MusicBrainz \
-    && chown $PUID:$PGID $GWB_HOME/.config/MusicBrainz \
-    && ln -s $GWB_HOME/.config/MusicBrainz /picard-web/MusicBrainz \
-    && mkdir /picard-web/backups \
-    && chown $PUID:$PGID /picard-web/backups
+# Overriding entrypoint
+COPY scripts/entrypoint.sh /pw/entrypoint.sh
+RUN chmod +x /pw/entrypoint.sh
 
 # Container healthcheck
 COPY scripts/healthcheck.sh /pw/healthcheck.sh
@@ -50,6 +46,7 @@ RUN chmod +x /pw/healthcheck.sh
 HEALTHCHECK --interval=30s --timeout=10s --start-period=10s --retries=3 \
     CMD /pw/healthcheck.sh
 
+ENTRYPOINT [ "/pw/entrypoint.sh" ]
 CMD ["start-app", "--title", "Picard Web", "picard"]
 
 FROM minimal AS full
@@ -60,24 +57,23 @@ RUN apt-get update \
     git \
     zip
 
-RUN mkdir -p /picard-web/MusicBrainz/Picard/plugins \
-    && chown $PUID:$PGID /picard-web/MusicBrainz/Picard/plugins
+RUN mkdir -p $GWB_HOME/.config/MusicBrainz/Picard/plugins \
+    && chown -R $PUID:$PGID $GWB_HOME/.config/MusicBrainz
 
 # Install ReplayGain2 plugin (https://github.com/metabrainz/picard-plugins)
 RUN git clone https://github.com/metabrainz/picard-plugins /tmp/picard-plugins \
-    && (cd /tmp/picard-plugins/plugins && zip -r /picard-web/MusicBrainz/Picard/plugins/replaygain2.zip replaygain2) \
+    && (cd /tmp/picard-plugins/plugins && zip -r $GWB_HOME/.config/MusicBrainz/Picard/plugins/replaygain2.zip replaygain2) \
     && rm -rf /tmp/picard-plugins
 
 # Install lyrics plugin (https://github.com/izaz4141/picard-lrclib)
 RUN git clone https://github.com/izaz4141/picard-lrclib /tmp/lrclib \
     && mv /tmp/lrclib/lrcget.py /tmp/lrclib/__init__.py \
-    && (cd /tmp && zip -r /picard-web/MusicBrainz/Picard/plugins/lrclib.zip lrclib -x "lrclib/.git" "lrclib/readme") \
+    && (cd /tmp && zip -r $GWB_HOME/.config/MusicBrainz/Picard/plugins/lrclib.zip lrclib -x "lrclib/.git" "lrclib/readme") \
     && rm -rf /tmp/lrclib
 
 # Enable plugins
 RUN echo "[setting]\nenabled_plugins=lrclib, replaygain2" > "$GWB_HOME/.config/MusicBrainz/Picard.ini" \
     && chown $PUID:$PGID "$GWB_HOME/.config/MusicBrainz/Picard.ini"
-
 
 RUN apt-get remove -y \
     git \
