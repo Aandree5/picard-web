@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.3.1](https://github.com/Aandree5/picard-web/compare/v1.3.0...v1.3.1) (2025-10-29)
+
+
+### Bug Fixes
+
+* apply fix from `gui-web-base` for transparent windows when switc… ([#24](https://github.com/Aandree5/picard-web/issues/24)) ([b43759b](https://github.com/Aandree5/picard-web/commit/b43759b807991a7587c43f99a9ed4b8d80401165))
+* apply fix from `gui-web-base` for transparent windows when switching tabs ([b43759b](https://github.com/Aandree5/picard-web/commit/b43759b807991a7587c43f99a9ed4b8d80401165))
+
 ## [1.3.0](https://github.com/Aandree5/picard-web/compare/v1.2.0...v1.3.0) (2025-10-29)
 
 
