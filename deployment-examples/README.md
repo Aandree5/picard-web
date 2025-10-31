@@ -11,12 +11,12 @@ This folder contains example `docker compose` setups for running [**Picard Web**
 
 > ℹ️ **Info:** The `traefik` example does **not** cover obtaining a valid TLS certificate. By default, Traefik will start with its built‑in self‑signed certificate. For production deployments, refer to the [Traefik documentation](https://doc.traefik.io/traefik/) to configure certificate management that best fits your environment.
 
-## 🔧 Notes & Recommendations
+## 📝 Notes & Recommendations
 
 - **Avoid** using `latest` as an image tag, always pin to a specific version.
 - Both examples are set to redirect to `HTTPS`.
 
-## 🚀 Getting Started
+## 📦 Deployment Steps
 
 1. Rename `example.env` to `.env`.
 2. Replace all the required variable sin `.env`.
