@@ -1,0 +1,47 @@
+name: picard-web
+
+services:
+  picard-web:
+    image: aandree5/picard-web:${PICARD_TAG}
+    container_name: picard-web
+    restart: unless-stopped
+    env_file:
+      - .env
+    volumes:
+      - ${V_CONFIG_DIR}:/picard-web:rw
+      - ${V_MUSIC_DIR}:/music:rw
+    networks:
+      - reverse-proxy
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.picard-web.rule=Host(`<url>`)
+      - traefik.http.routers.picard-web.tls=true
+      - traefik.http.routers.picard-web.service=picard-web
+      - traefik.http.services.picard-web.loadbalancer.server.port=5000
+
+  traefik:
+    image: traefik:${TRAEFIK_TAG}
+    container_name: traefik
+    command: 
+      --global.checkNewVersion=true
+
+      --entryPoints.web.address=:80
+      --entryPoints.web.http.redirections.entryPoint.to=websecure
+      --entryPoints.web.http.redirections.entryPoint.scheme=https
+      --entryPoints.websecure.address=:443
+
+      --providers.docker.exposedByDefault=false
+      --providers.docker.network=reverse-proxy
+    ports:
+      - 80:80 # HTTP entryPoints
+      - 443:443 # HTTPS entryPoints
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    env_file:
+      - .env
+    networks:
+      - reverse-proxy
+
+networks:
+  reverse-proxy:
+    external: true
