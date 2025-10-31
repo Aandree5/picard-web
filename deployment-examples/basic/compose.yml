@@ -1,0 +1,15 @@
+name: picard-web
+
+services:
+  picard-web:
+    image: aandree5/picard-web:${PICARD_TAG}
+    container_name: picard-web
+    restart: unless-stopped
+    ports:
+      - 80:5000
+      - 443:5443
+    env_file:
+      - .env
+    volumes:
+      - ${V_CONFIG_DIR}:/picard-web:rw
+      - ${V_MUSIC_DIR}:/music:rw

@@ -40,11 +40,36 @@ Picard Web publishes two Docker image variants:
 
 ## 🚀 Getting Started
 
+- ### Docker Run
+
+Simple run command:
+
 ```bash
 docker run -p 80:5000 -p 443:5443 aandree5/picard-web
 ```
 
 > Then open `https://localhost` in your browser.
+
+- ### Docker Compose
+
+More examples are available in the [deployment-examples](./deployment-examples/README.md) folder.
+
+```yaml
+services:
+  picard-web:
+    image: aandree5/picard-web:latest
+    container_name: picard-web
+    restart: unless-stopped
+    ports:
+      - 80:5000
+      - 443:5443
+    volumes:
+      - <config_dir>:/picard-web:rw
+      - <music_dir>:/music:rw
+```
+
+> Replace `<config_dir>` and `<music_dir>` with the appropriate host paths.  
+
 
 ## 🔌 Included Plugins
 
@@ -64,7 +89,7 @@ This project follows [Semantic Versioning](https://semver.org/) and uses automat
 
 | Format                               | Example        | Description                                                                   |
 | ------------------------------------ | -------------- | ----------------------------------------------------------------------------- |
-| `latest`                             | -              | Always the newest (`full` variant), may include breaking changes.               |
+| `latest`                             | -              | Always the newest (`full` variant), may include breaking changes.             |
 | `<variant>-v<major>`                 | `minimal-v1`   | Latest stable for a major version, of the given variant. No breaking changes. |
 | `<variant>-v<major>.<minor>`         | `minimal-v1.1` | Latest patch for a minor version, of the given variant. No new featues.       |
 | `<variant>-v<major>.<minor>.<patch>` | `full-v1.1.0`  | Fixed version, of the given variant, only changes if manually updated.        |

@@ -4,8 +4,12 @@
         "autoremove",
         "Brainz",
         "Buildx",
+        "duckdns",
+        "duckdnsresolver",
         "fulcio",
         "healthcheck",
+        "ipallowlist",
+        "LETSENCRYPT",
         "lrcget",
         "lrclib",
         "noninteractive",
@@ -13,9 +17,12 @@
         "PGID",
         "pgrep",
         "PUID",
+        "redirections",
         "Rekor",
         "replaygain",
         "rsgain",
-        "sigstore"
+        "sigstore",
+        "sourcerange",
+        "websecure"
     ]
 }
