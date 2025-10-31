@@ -1,7 +1,7 @@
 # Picard Web
 
 <div align="center">
-  <img src="images/logo_256.png" alt="Logo" />
+  <img src="images/logo/logo_256.png" alt="Logo" />
 </div>
 
 ![Deploy Docker image](https://img.shields.io/github/actions/workflow/status/aandree5/picard-web/docker-deploy.yml?logoColor=white&label=Deploy%20Docker%20image&logo=github) 
@@ -79,7 +79,12 @@ The `full` variant bundles several plugins to enhance tagging workflows.
 - **Lyrics (LRCLib)** - fetches synchronized lyrics from LRCLib
 - **AcousticBrainz Tags** - highlevel classifiers and tonal/rhythm tags from the AcousticBrainz database
 
-> These plugins come pre-installed and are enabled with their default configurations.
+> These plugins come pre-installed and are enabled with their default configurations.  
+>Each plugin includes configurable options available in the settings.
+
+**ReplayGain 2.0** and **Lyrics (LRCLib)** can be applied to either an album or an individual track by right‑clicking the item, as shown below.
+
+![ReplayGain and Lyrics plugins](./images/docs/ReplayGainLyrics.png)
 
 ## 🏷️ Versioning & Tags
 
