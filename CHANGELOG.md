@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.4](https://github.com/Aandree5/picard-web/compare/v1.3.3...v1.3.4) (2025-11-01)
+
+
+### Bug Fixes
+
+* improved stream quality ([#36](https://github.com/Aandree5/picard-web/issues/36)) ([8943d83](https://github.com/Aandree5/picard-web/commit/8943d839b259a75c88b5a014e5581a2088f7fa20))
+
 ## [1.3.3](https://github.com/Aandree5/picard-web/compare/v1.3.2...v1.3.3) (2025-10-29)
 
 
