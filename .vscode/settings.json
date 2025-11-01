@@ -23,6 +23,7 @@
         "rsgain",
         "sigstore",
         "sourcerange",
-        "websecure"
+        "websecure",
+        "xpra"
     ]
 }

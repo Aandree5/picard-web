@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM aandree5/gui-web-base:v1.8.2 AS minimal
+FROM aandree5/gui-web-base:v1.9.2 AS minimal
 
 LABEL org.opencontainers.image.authors="Aandree5" \
     org.opencontainers.image.license="Apache-2.0" \
@@ -48,6 +48,8 @@ RUN mkdir -p /picard-web/MusicBrainz \
 # Overriding entrypoint
 COPY scripts/entrypoint.sh /pw/entrypoint.sh
 RUN chmod +x /pw/entrypoint.sh
+
+RUN configure-xpra --content-type class-instance:Picard=text
 
 # Container healthcheck
 COPY scripts/healthcheck.sh /pw/healthcheck.sh
