@@ -38,7 +38,7 @@ Picard Web publishes two Docker image variants:
 | `minimal` | Contains only the core Picard application                            |
 | `full`    | Includes Picard plus additional plugins and their required libraries |
 
-## 🚀 Getting Started
+## ✨ Getting Started
 
 - ### Docker Run
 
@@ -70,6 +70,17 @@ services:
 
 > Replace `<config_dir>` and `<music_dir>` with the appropriate host paths.  
 
+### ‼️ Temporary Workaround for `Browser Integration`
+
+Picard is undergoing changes to how browser integration works, particularly in how it launches webpages.
+
+1. Open Picard Web
+2. Go to **Options > Options... > Network**
+3. **Untick** the checkbox for **Browser Integration**
+
+This disables the integration and allows login via an auth code. However, some features—like **Lookup in Browser** may not fully work. The browser page will open, but it won’t return the match automatically.
+
+> This workaround remains valid until upstream changes in [PICARD-3040](https://github.com/metabrainz/picard/pull/2596) are finalized.
 
 ## 🔌 Included Plugins
 
