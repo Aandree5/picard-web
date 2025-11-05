@@ -15,6 +15,8 @@
 
 Picard Web is a containerized, browser-accessible version of [MusicBrainz Picard](https://picard.musicbrainz.org/), the powerful open-source music tagger. No install required, just open your browser and start organizing your library.
 
+![MusicBrainz Picard](./images/docs/Picard.png)
+
 ## ⚠️ Disclaimer
 
 This project is not affiliated with, endorsed by, or officially supported by the [MetaBrainz Foundation](https://metabrainz.org/) or the [MusicBrainz Picard](https://picard.musicbrainz.org/) team.  
