@@ -19,6 +19,6 @@ jobs:
         with:
           username: aandree5
           password: ${{ secrets.DOCKER_PASSWORD }}
-          repository: aandree5/picard-web
+          repository: ${{ github.repository }}
           short-description: ${{ github.event.repository.description }}
           enable-url-completion: true
