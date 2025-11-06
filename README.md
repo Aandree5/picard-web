@@ -1,7 +1,7 @@
 # Picard Web
 
 <div align="center">
-  <img src="images/logo/logo_256.png" alt="Logo" />
+  <img src="https://github.com/Aandree5/picard-web/blob/main/images/logo/logo_256.png?raw=true" alt="Logo" />
 </div>
 
 ![Deploy Docker image](https://img.shields.io/github/actions/workflow/status/aandree5/picard-web/docker-deploy.yml?logoColor=white&label=Deploy%20Docker%20image&logo=github) 
