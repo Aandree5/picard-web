@@ -82,8 +82,6 @@ Picard is undergoing changes to how browser integration works, particularly in h
 
 This disables the integration and allows login via an auth code. However, some features—like **Lookup in Browser** may not fully work. The browser page will open, but it won’t return the match automatically.
 
-> This workaround remains valid until upstream changes in [PICARD-3040](https://github.com/metabrainz/picard/pull/2596) are finalized.
-
 ## 🔌 Included Plugins
 
 The `full` variant bundles several plugins to enhance tagging workflows.
