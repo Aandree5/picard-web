@@ -30,7 +30,8 @@ EXPOSE 5443
 
 RUN apt-get update \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y \
-    picard  \
+    picard \
+    pcmanfm \
     && apt-get autoremove -y --purge \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
