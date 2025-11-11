@@ -74,13 +74,25 @@ services:
 
 ### ‼️ Temporary Workaround for `Browser Integration`
 
-Picard is undergoing changes to how browser integration works, particularly in how it launches webpages.
+Picard is undergoing changes to how browser integration works, particularly in how it launches webpages. Not sure if it's going to help or not, but will try to get this to work.
 
 1. Open Picard Web
 2. Go to **Options > Options... > Network**
 3. **Untick** the checkbox for **Browser Integration**
 
-This disables the integration and allows login via an auth code. However, some features—like **Lookup in Browser** may not fully work. The browser page will open, but it won’t return the match automatically.
+This disables the integration and allows login via an auth code. However, some features—like **Lookup in Browser** may not fully work. The browser page will open, but it won’t return the match automatically.  
+  
+> 📌 **Note:** For users running this locally, it's possible to forward port `8000` on docker and getting the integration to work. 
+>- Docker run:
+>`... -p 8000:8000 ...`
+>
+>- Docker compose:
+>```yaml
+>...
+>ports:
+>  - 8000:8000
+>...
+>```
 
 ## 🔌 Included Plugins
 
