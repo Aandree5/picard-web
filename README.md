@@ -24,12 +24,13 @@ Picard Web is an independent wrapper designed to make Picard accessible via a br
 
 ## ⚡ Features
 
-- **Tag with MusicBrainz** - rich metadata, fast lookups
+- **Tag with MusicBrainz** - rich metadata
 - **Run in browser** - no install, works anywhere
 - **ReplayGain tagging** - loudness metadata for consistent playback
 - **Lyrics fetching** - synced lyrics via LRCLib
 - **Clipboard support** - copy and paste between Picard and browser
-- **Link handling** - open URLs directly from Picard
+- **No browser whitin a browser** - open URLs directly on the client browser
+- **In-browser audio playback** - Picard’s audio streams seamlessly to the client browser  
 
 ## 🧩 Image Variants
 
@@ -70,7 +71,7 @@ services:
       - <music_dir>:/music:rw
 ```
 
-> Replace `<config_dir>` and `<music_dir>` with the appropriate host paths.  
+> Replace `<config_dir>` and `<music_dir>` with the appropriate host paths.
 
 ### ‼️ Temporary Workaround for `Browser Integration`
 
@@ -80,19 +81,21 @@ Picard is undergoing changes to how browser integration works, particularly in h
 2. Go to **Options > Options... > Network**
 3. **Untick** the checkbox for **Browser Integration**
 
-This disables the integration and allows login via an auth code. However, some features—like **Lookup in Browser** may not fully work. The browser page will open, but it won’t return the match automatically.  
-  
-> 📌 **Note:** For users running this locally, it's possible to forward port `8000` on docker and getting the integration to work. 
->- Docker run:
->`... -p 8000:8000 ...`
+This disables the integration and allows login via an auth code. However, some features—like **Lookup in Browser** may not fully work. The browser page will open, but it won’t return the match automatically.
+
+> 📌 **Note:** For users running this locally, it's possible to forward port `8000` on docker and getting the integration to work.
 >
->- Docker compose:
->```yaml
->...
->ports:
->  - 8000:8000
->...
->```
+> - Docker run:
+>   `... -p 8000:8000 ...`
+>
+> - Docker compose:
+>
+> ```yaml
+>
+> ---
+> ports:
+>   - 8000:8000
+> ```
 
 ## 🔌 Included Plugins
 
@@ -103,7 +106,7 @@ The `full` variant bundles several plugins to enhance tagging workflows.
 - **AcousticBrainz Tags** - highlevel classifiers and tonal/rhythm tags from the AcousticBrainz database
 
 > These plugins come pre-installed and are enabled with their default configurations.  
->Each plugin includes configurable options available in the settings.
+> Each plugin includes configurable options available in the settings.
 
 **ReplayGain 2.0** and **Lyrics (LRCLib)** can be applied to either an album or an individual track by right‑clicking the item, as shown below.
 
