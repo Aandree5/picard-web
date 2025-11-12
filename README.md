@@ -97,7 +97,7 @@ This disables the integration and allows login via an auth code. However, some f
 >   - 8000:8000
 > ```
 
-## 🔌 Included Plugins
+## 🔌 Bundled Plugins
 
 The `full` variant bundles several plugins to enhance tagging workflows.
 
@@ -111,6 +111,13 @@ The `full` variant bundles several plugins to enhance tagging workflows.
 **ReplayGain 2.0** and **Lyrics (LRCLib)** can be applied to either an album or an individual track by right‑clicking the item, as shown below.
 
 ![ReplayGain and Lyrics plugins](./images/docs/ReplayGainLyrics.png)
+
+## 🗂️ Bundled Tools
+
+With the `full` variant, [Xfe](http://roland65.free.fr/xfe/) is included as a lightweight file manager, for easy navigation through the music library.  
+Accessible via the applications menu.
+
+![Applications Menu](./images/docs/ApplicationsMenu.png)
 
 ## 🏷️ Versioning & Tags
 
@@ -165,6 +172,9 @@ Contributions are welcome! Please follow these steps to get set up:
 
 - [**rsgain**](https://github.com/complexlogic/rsgain)  
   ReplayGain 2.0 tagging utility
+
+- [**Xfe**](http://roland65.free.fr/xfe/)
+  Lightweight file manager
 
 ## 📄 License
 
