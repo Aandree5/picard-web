@@ -27,23 +27,35 @@ ENV APP_DIRS="/pw /picard-web"
 
 EXPOSE 5000
 EXPOSE 5443
+# Picard browser integration
+EXPOSE 8000
 
 RUN apt-get update \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y \
-    picard  \
+    picard \
+    && apt-get install -y --no-install-recommends \
+    xfe \
     && apt-get autoremove -y --purge \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
 RUN mkdir -p /picard-web/MusicBrainz \
-    mkdir -p $GWB_HOME/.config \
+    && mkdir -p "${GWB_HOME}/.config" \
+    && chown -R "${PUID}:${PGID}" "${GWB_HOME}/.config" \
     # Link picard config files so that source of truth is /picard-web/MusicBrainz
-    && ln -sfn /picard-web/MusicBrainz $GWB_HOME/.config/MusicBrainz \
+    && ln -sfn /picard-web/MusicBrainz "${GWB_HOME}/.config/MusicBrainz" \
     # When loading new configuration (from options > maintenance),
     # picard will take a backup of the current configuration and try
     # to save it to /home/gwb/Documents, create a link for persistence
     && mkdir /picard-web/backups \
-    && ln -sfn /picard-web/backups $GWB_HOME/Documents
+    && ln -sfn /picard-web/backups "${GWB_HOME}/Documents"
+
+# Clean xfe application menu entries
+RUN sed -i 's/^Name=.*/Name=File Manager/' /usr/share/applications/xfe.desktop \
+    && sed -i 's/^Name=.*/Name=Image Viewer/' /usr/share/applications/xfi.desktop \
+    && sed -i '/^Exec=/a NoDisplay=true' /usr/share/applications/xfw.desktop \
+    && sed -i '/^Exec=/a NoDisplay=true' /usr/share/applications/xfp.desktop \
+    && sed -i '/^Exec=/a NoDisplay=true' /usr/share/applications/xfa.desktop
 
 # Overriding entrypoint
 COPY scripts/entrypoint.sh /pw/entrypoint.sh
@@ -84,7 +96,7 @@ RUN mkdir -p /picard-web/MusicBrainz/Picard/plugins \
     && echo "[setting]\nenabled_plugins=lrclib, replaygain2, acousticbrainz" > "/picard-web/MusicBrainz/Picard.ini"
 
 # Set permissions
-RUN chown -R "$PUID:$PGID" /picard-web \
+RUN chown -R "${PUID}:${PGID}" /picard-web \
     # Backup initial config so to be restored in case a bind is created on picard-web folder,
     # as binding to a host dir will always take the host as the source and thus clear picard-web folder,
     # entrypoint can then restore if needed
