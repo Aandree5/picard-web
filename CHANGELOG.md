@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.4.0](https://github.com/Aandree5/picard-web/compare/v1.3.4...v1.4.0) (2025-11-12)
+
+
+### Features
+
+* add file explorer ([#49](https://github.com/Aandree5/picard-web/issues/49)) ([6d752c4](https://github.com/Aandree5/picard-web/commit/6d752c46ca32b7ead9727a20194e0ba5fb310fb2))
+
+
+### Bug Fixes
+
+* audio forwarding ([#48](https://github.com/Aandree5/picard-web/issues/48)) ([d0d482f](https://github.com/Aandree5/picard-web/commit/d0d482f46b4d2864c6fd47511df6bca9364afd0b))
+
 ## [1.3.4](https://github.com/Aandree5/picard-web/compare/v1.3.3...v1.3.4) (2025-11-01)
 
 
