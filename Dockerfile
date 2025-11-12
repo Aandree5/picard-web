@@ -33,7 +33,8 @@ EXPOSE 8000
 RUN apt-get update \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y \
     picard \
-    pcmanfm \
+    && apt-get install -y --no-install-recommends \
+    xfe \
     && apt-get autoremove -y --purge \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
@@ -47,7 +48,14 @@ RUN mkdir -p /picard-web/MusicBrainz \
     # picard will take a backup of the current configuration and try
     # to save it to /home/gwb/Documents, create a link for persistence
     && mkdir /picard-web/backups \
-    && ln -sfn /picard-web/backups $GWB_HOME/Documents
+    && ln -sfn /picard-web/backups "${GWB_HOME}/Documents"
+
+# Clean xfe application menu entries
+RUN sed -i 's/^Name=.*/Name=File Manager/' /usr/share/applications/xfe.desktop \
+    && sed -i 's/^Name=.*/Name=Archive Manager/' /usr/share/applications/xfa.desktop \
+    && sed -i 's/^Name=.*/Name=Image Viewer/' /usr/share/applications/xfi.desktop \
+    && sed -i '/^Exec=/a NoDisplay=true' /usr/share/applications/xfw.desktop \
+    && sed -i '/^Exec=/a NoDisplay=true' /usr/share/applications/xfp.desktop
 
 # Overriding entrypoint
 COPY scripts/entrypoint.sh /pw/entrypoint.sh
