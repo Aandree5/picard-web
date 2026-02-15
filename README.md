@@ -164,7 +164,7 @@ Contributions are welcome! Please follow these steps to get set up:
 
 ## 📦 Tech Stack
 
-- [**GUI Web Base**](https://github.com/aandre5/gui-web-base)  
+- [**GUI Web Base**](https://github.com/aandree5/gui-web-base)  
   Containerized browser GUI foundation
 
 - [**MusicBrainz Picard**](https://github.com/metabrainz/picard)  
