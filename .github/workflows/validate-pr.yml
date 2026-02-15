@@ -11,6 +11,12 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Set up QEMU (for emulation)
+        uses: docker/setup-qemu-action@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
@@ -29,10 +35,10 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Build Docker image
-        run: docker build -t picard-web .
+        run: docker build -t picard-web:latest .
 
       - name: Run container
-        run: docker run -d --name picard-web-test picard-web
+        run: docker run -d --name picard-web-test picard-web:latest
 
       - name: Wait for healthcheck to pass
         run: |
@@ -47,4 +53,25 @@ jobs:
           done
           echo "Container did not become healthy in time."
           docker logs picard-web-test
+          exit 1
+
+      - name: Build ARM64 Docker image (emulated)
+        run: docker buildx build --platform linux/arm64 --load -t picard-web:latest-arm .
+
+      - name: Run ARM64 container (emulated)
+        run: docker run -d --platform linux/arm64 --name picard-web-test-arm picard-web:latest-arm
+
+      - name: Wait for ARM64 healthcheck to pass
+        run: |
+          for i in {1..10}; do
+            STATUS=$(docker inspect --format='{{json .State.Health.Status}}' picard-web-test-arm)
+            echo "ARM health status: $STATUS"
+            if [ "$STATUS" == "\"healthy\"" ]; then
+              echo "ARM container is healthy."
+              exit 0
+            fi
+            sleep 5
+          done
+          echo "ARM container did not become healthy in time."
+          docker logs picard-web-test-arm
           exit 1
