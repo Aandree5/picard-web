@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.0](https://github.com/Aandree5/picard-web/compare/v1.4.0...v1.5.0) (2026-02-15)
+
+
+### Features
+
+* add arm support ([#52](https://github.com/Aandree5/picard-web/issues/52)) ([234bd19](https://github.com/Aandree5/picard-web/commit/234bd1935b31cf87c5120679361c19c506e0848f))
+
 ## [1.4.0](https://github.com/Aandree5/picard-web/compare/v1.3.4...v1.4.0) (2025-11-12)
 
 
