@@ -30,7 +30,8 @@ Picard Web is an independent wrapper designed to make Picard accessible via a br
 - **Lyrics fetching** - synced lyrics via LRCLib
 - **Clipboard support** - copy and paste between Picard and browser
 - **No browser whitin a browser** - open URLs directly on the client browser
-- **In-browser audio playback** - Picard’s audio streams seamlessly to the client browser  
+- **In-browser audio playback** - Picard’s audio streams seamlessly to the client browser
+- **Dark mode available** - display app in a dark theme 
 
 ## 🧩 Image Variants
 
@@ -118,6 +119,19 @@ With the `full` variant, [Xfe](http://roland65.free.fr/xfe/) is included as a li
 Accessible via the applications menu.
 
 ![Applications Menu](./images/docs/ApplicationsMenu.png)
+
+## 🌙 Dark mode
+
+> Temporary workaround until `v3` introduces theme management.
+
+Enable the dark UI:
+
+- Open Picard Web and go to `Options > Options... > User Interface`.
+- Set **User interface color theme** to `System`.
+- Click **Make It So!** and close Picard
+- It will restart automatically and open in dark mode
+
+![Dark mode](./images/docs/DarkMode.png)
 
 ## 🏷️ Versioning & Tags
 

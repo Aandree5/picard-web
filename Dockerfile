@@ -35,6 +35,7 @@ RUN apt-get update \
     picard \
     && apt-get install -y --no-install-recommends \
     xfe \
+    adwaita-qt \
     && apt-get autoremove -y --purge \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
@@ -62,6 +63,9 @@ COPY scripts/entrypoint.sh /pw/entrypoint.sh
 RUN chmod +x /pw/entrypoint.sh
 
 RUN configure-xpra --content-type class-instance:Picard=text
+
+# TEMP - Dark theme for picard. v3 will handle dark theme differently and this will be removed
+ENV QT_STYLE_OVERRIDE=Adwaita-Dark
 
 # Container healthcheck
 COPY scripts/healthcheck.sh /pw/healthcheck.sh
