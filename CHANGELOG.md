@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.0](https://github.com/Aandree5/picard-web/compare/v1.5.0...v1.6.0) (2026-03-08)
+
+
+### Features
+
+* add dark mode ([#58](https://github.com/Aandree5/picard-web/issues/58)) ([639b6d7](https://github.com/Aandree5/picard-web/commit/639b6d7a84d09759289ed5cc8263de1cc866c7f2))
+
 ## [1.5.0](https://github.com/Aandree5/picard-web/compare/v1.4.0...v1.5.0) (2026-02-15)
 
 
