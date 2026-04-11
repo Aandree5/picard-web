@@ -51,11 +51,11 @@ RUN mkdir -p /picard-web/MusicBrainz \
     && ln -sfn /picard-web/backups "${GWB_HOME}/Documents"
 
 # Clean xfe application menu entries
-RUN sed -i 's/^Name=.*/Name=File Manager/' /usr/share/applications/xfe.desktop \
-    && sed -i 's/^Name=.*/Name=Image Viewer/' /usr/share/applications/xfi.desktop \
-    && sed -i '/^Exec=/a NoDisplay=true' /usr/share/applications/xfw.desktop \
-    && sed -i '/^Exec=/a NoDisplay=true' /usr/share/applications/xfp.desktop \
-    && sed -i '/^Exec=/a NoDisplay=true' /usr/share/applications/xfa.desktop
+RUN sed -i "s/^Name=.*/Name=File Manager/" /usr/share/applications/xfe.desktop \
+    && sed -i "s/^Name=.*/Name=Image Viewer/" /usr/share/applications/xfi.desktop \
+    && sed -i "/^Exec=/a NoDisplay=true" /usr/share/applications/xfw.desktop \
+    && sed -i "/^Exec=/a NoDisplay=true" /usr/share/applications/xfp.desktop \
+    && sed -i "/^Exec=/a NoDisplay=true" /usr/share/applications/xfa.desktop
 
 # Overriding entrypoint
 COPY scripts/entrypoint.sh /pw/entrypoint.sh
@@ -79,7 +79,9 @@ RUN apt-get update \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y \
     rsgain  \
     git \
-    zip
+    zip \
+    fonts-noto-cjk \
+    && fc-cache -f -v
 
 RUN mkdir -p /picard-web/MusicBrainz/Picard/plugins \
     # Install official plugin (https://github.com/metabrainz/picard-plugins)

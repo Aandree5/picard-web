@@ -6,6 +6,8 @@
         "Buildx",
         "duckdns",
         "duckdnsresolver",
+        "fontconfig",
+        "FONTDIR",
         "fulcio",
         "healthcheck",
         "ipallowlist",
