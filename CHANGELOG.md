@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.1](https://github.com/Aandree5/picard-web/compare/v1.6.0...v1.6.1) (2026-04-11)
+
+
+### Bug Fixes
+
+* added cjk font for picard ([#63](https://github.com/Aandree5/picard-web/issues/63)) ([eaf6e52](https://github.com/Aandree5/picard-web/commit/eaf6e528b253604682d6eacf65463b2562151af7))
+
 ## [1.6.0](https://github.com/Aandree5/picard-web/compare/v1.5.0...v1.6.0) (2026-03-08)
 
 
