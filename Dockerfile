@@ -63,7 +63,7 @@ RUN configure-xpra --content-type class-instance:Picard=text
 ENV QT_STYLE_OVERRIDE=Adwaita-Dark
 
 HEALTHCHECK --interval=30s --timeout=10s --start-period=10s --retries=3 \
-    CMD pgrep -x picard >/dev/null && /gwb/healthcheck.sh || exit 1
+    CMD pgrep -x picard >/dev/null && wget --spider --no-check-certificate --quiet https://localhost:5443 || exit 1
 
 USER gwb
 
