@@ -62,12 +62,8 @@ RUN configure-xpra --content-type class-instance:Picard=text
 # TEMP - Dark theme for picard. v3 will handle dark theme differently and this will be removed
 ENV QT_STYLE_OVERRIDE=Adwaita-Dark
 
-# Container healthcheck
-COPY scripts/healthcheck.sh /pw/healthcheck.sh
-RUN chmod +x /pw/healthcheck.sh
-
 HEALTHCHECK --interval=30s --timeout=10s --start-period=10s --retries=3 \
-    CMD /pw/healthcheck.sh
+    CMD pgrep -x picard >/dev/null && /gwb/healthcheck.sh || exit 1
 
 USER gwb
 
