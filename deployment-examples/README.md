@@ -15,6 +15,7 @@ This folder contains example `docker compose` setups for running [**Picard Web**
 
 - **Avoid** using `latest` as an image tag, always pin to a specific version.
 - Both examples are set to redirect to `HTTPS`.
+- `PUID`/`PGID` must match the owner (`uid:gid`) of `V_CONFIG_DIR` and `V_MUSIC_DIR` on the host, since Picard Web runs rootless as that user via Docker's `user:` field.
 
 ## 📦 Deployment Steps
 

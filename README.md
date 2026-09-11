@@ -31,7 +31,7 @@ Picard Web is an independent wrapper designed to make Picard accessible via a br
 - **Clipboard support** - copy and paste between Picard and browser
 - **No browser whitin a browser** - open URLs directly on the client browser
 - **In-browser audio playback** - Picard’s audio streams seamlessly to the client browser
-- **Dark mode available** - display app in a dark theme 
+- **Dark mode available** - display app in a dark theme
 
 ## 🧩 Image Variants
 
@@ -64,6 +64,7 @@ services:
     image: aandree5/picard-web:latest
     container_name: picard-web
     restart: unless-stopped
+    user: "<uid>:<gid>"
     ports:
       - 80:5000
       - 443:5443
@@ -72,6 +73,8 @@ services:
       - <music_dir>:/music:rw
 ```
 
+> 📌 **Note:** Picard Web runs rootless as the image's `gwb` user (`1000:1000`) by default. Mounted configuration and music paths must already be writable by that user. To use a host-owned directory, set `<uid>:<gid>` (via the `user:` field above, or `PUID`/`PGID` in the [deployment examples](./deployment-examples/README.md)) to match the owner of the mounted paths.
+>
 > Replace `<config_dir>` and `<music_dir>` with the appropriate host paths.
 
 ### ‼️ Temporary Workaround for `Browser Integration`
@@ -88,11 +91,9 @@ This disables the integration and allows login via an auth code. However, some f
 >
 > - Docker run:
 >   `... -p 8000:8000 ...`
->
 > - Docker compose:
 >
 > ```yaml
->
 > ---
 > ports:
 >   - 8000:8000
@@ -165,7 +166,6 @@ Contributions are welcome! Please follow these steps to get set up:
    ```
 
 3. **Follow [Conventional Commits](https://www.conventionalcommits.org/)** for commit messages:
-
    - `feat:` - New feature
    - `fix:` - Bug fix
    - `docs:` - Documentation changes

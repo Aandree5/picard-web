@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM aandree5/gui-web-base:v1.11.0 AS minimal
+FROM aandree5/gui-web-base:v2.0.0 AS minimal
 
 LABEL org.opencontainers.image.authors="Aandree5" \
     org.opencontainers.image.license="Apache-2.0" \
@@ -20,15 +20,15 @@ LABEL org.opencontainers.image.authors="Aandree5" \
     org.opencontainers.image.title="Picard Web" \
     org.opencontainers.image.description="Image to run MusicBrainz Picard in the browser"
 
-# Directories for upstream image to set the correct permissions
-# `pw` for image required scripts and files
-# `picard-web` for user to persist
-ENV APP_DIRS="/pw /picard-web"
+# Directories that must be writable by the runtime user.
+ENV APP_DIRS="/picard-web"
 
 EXPOSE 5000
 EXPOSE 5443
 # Picard browser integration
 EXPOSE 8000
+
+USER root
 
 RUN apt-get update \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y \
@@ -40,16 +40,11 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-RUN mkdir -p /picard-web/MusicBrainz \
-    && mkdir -p "${GWB_HOME}/.config" \
-    && chown -R "${PUID}:${PGID}" "${GWB_HOME}/.config" \
-    # Link picard config files so that source of truth is /picard-web/MusicBrainz
-    && ln -sfn /picard-web/MusicBrainz "${GWB_HOME}/.config/MusicBrainz" \
-    # When loading new configuration (from options > maintenance),
-    # picard will take a backup of the current configuration and try
-    # to save it to /home/gwb/Documents, create a link for persistence
-    && mkdir /picard-web/backups \
-    && ln -sfn /picard-web/backups "${GWB_HOME}/Documents"
+RUN mkdir -p /picard-web \
+    && mkdir -p /usr/share/picard-web/initial/MusicBrainz \
+    && mkdir -p /usr/share/picard-web/initial/backups \
+    && chmod a+rwx /picard-web \
+    && chmod -R a+rX /usr/share/picard-web/initial
 
 # Clean xfe application menu entries
 RUN sed -i "s/^Name=.*/Name=File Manager/" /usr/share/applications/xfe.desktop \
@@ -58,9 +53,9 @@ RUN sed -i "s/^Name=.*/Name=File Manager/" /usr/share/applications/xfe.desktop \
     && sed -i "/^Exec=/a NoDisplay=true" /usr/share/applications/xfp.desktop \
     && sed -i "/^Exec=/a NoDisplay=true" /usr/share/applications/xfa.desktop
 
-# Overriding entrypoint
-COPY scripts/entrypoint.sh /pw/entrypoint.sh
-RUN chmod +x /pw/entrypoint.sh
+# Picard startup runs after the inherited entrypoint prepares the runtime home.
+COPY scripts/start-picard.sh /pw/start-picard.sh
+RUN chmod +x /pw/start-picard.sh
 
 RUN configure-xpra --content-type class-instance:Picard=text
 
@@ -74,10 +69,13 @@ RUN chmod +x /pw/healthcheck.sh
 HEALTHCHECK --interval=30s --timeout=10s --start-period=10s --retries=3 \
     CMD /pw/healthcheck.sh
 
-ENTRYPOINT [ "/pw/entrypoint.sh" ]
-CMD ["start-app", "--title", "Picard Web", "picard"]
+USER gwb
+
+CMD ["/pw/start-picard.sh"]
 
 FROM minimal AS full
+
+USER root
 
 RUN apt-get update \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y \
@@ -87,27 +85,20 @@ RUN apt-get update \
     fonts-noto-cjk \
     && fc-cache -f -v
 
-RUN mkdir -p /picard-web/MusicBrainz/Picard/plugins \
+RUN mkdir -p /usr/share/picard-web/initial/MusicBrainz/Picard/plugins \
     # Install official plugin (https://github.com/metabrainz/picard-plugins)
     && git clone https://github.com/metabrainz/picard-plugins /tmp/picard-plugins \
-    && (cd /tmp/picard-plugins/plugins && zip -r /picard-web/MusicBrainz/Picard/plugins/replaygain2.zip replaygain2) \
-    && (cd /tmp/picard-plugins/plugins && zip -r /picard-web/MusicBrainz/Picard/plugins/acousticbrainz.zip acousticbrainz) \
+    && (cd /tmp/picard-plugins/plugins && zip -r /usr/share/picard-web/initial/MusicBrainz/Picard/plugins/replaygain2.zip replaygain2) \
+    && (cd /tmp/picard-plugins/plugins && zip -r /usr/share/picard-web/initial/MusicBrainz/Picard/plugins/acousticbrainz.zip acousticbrainz) \
     && rm -rf /tmp/picard-plugins \
     # Install lyrics plugin (https://github.com/izaz4141/picard-lrclib)
     && git clone https://github.com/izaz4141/picard-lrclib /tmp/lrclib \
     && mv /tmp/lrclib/lrcget.py /tmp/lrclib/__init__.py \
-    && (cd /tmp && zip -r /picard-web/MusicBrainz/Picard/plugins/lrclib.zip lrclib -x "lrclib/.git" "lrclib/readme") \
+    && (cd /tmp && zip -r /usr/share/picard-web/initial/MusicBrainz/Picard/plugins/lrclib.zip lrclib -x "lrclib/.git" "lrclib/readme") \
     && rm -rf /tmp/lrclib \
     # Enable plugins
-    && echo "[setting]\nenabled_plugins=lrclib, replaygain2, acousticbrainz" > "/picard-web/MusicBrainz/Picard.ini"
-
-# Set permissions
-RUN chown -R "${PUID}:${PGID}" /picard-web \
-    # Backup initial config so to be restored in case a bind is created on picard-web folder,
-    # as binding to a host dir will always take the host as the source and thus clear picard-web folder,
-    # entrypoint can then restore if needed
-    && mkdir /pw/initial \
-    && cp -a /picard-web/. /pw/initial/
+    && echo "[setting]\nenabled_plugins=lrclib, replaygain2, acousticbrainz" > "/usr/share/picard-web/initial/MusicBrainz/Picard.ini" \
+    && chmod -R a+rX /usr/share/picard-web/initial
 
 RUN apt-get remove -y \
     git \
@@ -115,3 +106,5 @@ RUN apt-get remove -y \
     && apt-get autoremove -y --purge \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
+
+USER gwb
