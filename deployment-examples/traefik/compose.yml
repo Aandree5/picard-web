@@ -5,6 +5,7 @@ services:
     image: aandree5/picard-web:${PICARD_TAG}
     container_name: picard-web
     restart: unless-stopped
+    user: "${PUID}:${PGID}"
     env_file:
       - .env
     volumes:
