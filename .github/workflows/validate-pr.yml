@@ -3,6 +3,7 @@ name: Validate Pull Request
 on:
   pull_request:
     branches: [main]
+    types: [opened, synchronize, reopened, ready_for_review]
 
 permissions:
   contents: read
@@ -13,7 +14,7 @@ concurrency:
 
 jobs:
   pre-commit-check:
-    name: Pre-commit License Check
+    name: Pre-commit Checks
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
@@ -32,6 +33,7 @@ jobs:
   docker-build-healthcheck:
     name: Docker Build & Healthcheck
     runs-on: ubuntu-latest
+    if: github.event.pull_request.draft == false
     steps:
       - uses: actions/checkout@v7
 
@@ -42,7 +44,11 @@ jobs:
         uses: docker/setup-buildx-action@v4
 
       - name: Build Docker image
-        run: docker build -t picard-web:latest .
+        run: |
+          docker buildx build --load \
+            --cache-from type=gha,scope=amd64 \
+            --cache-to type=gha,mode=max,scope=amd64 \
+            -t picard-web:latest .
 
       - name: Run container
         run: docker run -d --name picard-web-test picard-web:latest
@@ -63,7 +69,11 @@ jobs:
           exit 1
 
       - name: Build ARM64 Docker image (emulated)
-        run: docker buildx build --platform linux/arm64 --load -t picard-web:latest-arm .
+        run: |
+          docker buildx build --platform linux/arm64 --load \
+            --cache-from type=gha,scope=arm64 \
+            --cache-to type=gha,mode=max,scope=arm64 \
+            -t picard-web:latest-arm .
 
       - name: Run ARM64 container (emulated)
         run: docker run -d --platform linux/arm64 --name picard-web-test-arm picard-web:latest-arm
