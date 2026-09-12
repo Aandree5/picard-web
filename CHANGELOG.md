@@ -1,5 +1,16 @@
 # Changelog
 
+## [2.0.0](https://github.com/Aandree5/picard-web/compare/v1.6.1...v2.0.0) (2026-09-11)
+
+
+### ⚠ BREAKING CHANGES
+
+* Picard Web now runs as the fixed non-root user 'gwb' (uid/gid 1000) by default instead of an arbitrary user. Mounted config and music directories must already be writable by that uid, or the container must be started with a matching user (via the 'user:' compose field or '--user' flag).
+
+### Features
+
+* running the container rootless ([#69](https://github.com/Aandree5/picard-web/issues/69)) ([2d05d9b](https://github.com/Aandree5/picard-web/commit/2d05d9b0b6b44be22762719189e6ba8c869d388b))
+
 ## [1.6.1](https://github.com/Aandree5/picard-web/compare/v1.6.0...v1.6.1) (2026-04-11)
 
 
