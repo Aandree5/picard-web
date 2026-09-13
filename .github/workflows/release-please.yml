@@ -25,7 +25,7 @@ jobs:
         uses: googleapis/release-please-action@v5
         id: release
         with:
-          token: ${{ secrets.GH_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Tag major and minor versions
         if: ${{ steps.release.outputs.release_created }}
