@@ -1,7 +1,8 @@
 # Picard Web
 
 <div align="center">
-  <img src="./images/logo/logo.svg" alt="Logo"  width="256" />
+  <!-- Use full URL to enable logo to show on mirror docker hub description -->
+  <img src="https://raw.githubusercontent.com/Aandree5/picard-web/9ecec122d932b6018d2000be7f9241bca4c64193/images/logo/logo.svg" alt="Logo"  width="256" />
 </div>
  
 
