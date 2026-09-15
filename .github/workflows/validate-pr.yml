@@ -31,9 +31,17 @@ jobs:
         run: pre-commit run --all-files
 
   docker-build-healthcheck:
-    name: Docker Build & Healthcheck
+    name: Docker Build & Healthcheck (${{ matrix.variant }}, ${{ matrix.user.name }})
     runs-on: ubuntu-latest
     if: github.event.pull_request.draft == false
+    strategy:
+      matrix:
+        variant: [minimal, full]
+        user:
+          - name: default
+            user_args: ""
+          - name: custom
+            user_args: "--user 1234:2345"
     steps:
       - uses: actions/checkout@v7
 
@@ -51,12 +59,12 @@ jobs:
             -t picard-web:latest .
 
       - name: Run container
-        run: docker run -d --name picard-web-test picard-web:latest
+        run: docker run -d ${{ matrix.user.user_args }} --name picard-web-test-${{ matrix.variant }}-${{ matrix.user.name }} picard-web:${{ matrix.variant }}
 
       - name: Wait for healthcheck to pass
         run: |
           for i in {1..10}; do
-            STATUS=$(docker inspect --format='{{json .State.Health.Status}}' picard-web-test)
+            STATUS=$(docker inspect --format='{{json .State.Health.Status}}' picard-web-test-${{ matrix.variant }}-${{ matrix.user.name }})
             echo "Health status: $STATUS"
             if [ "$STATUS" == "\"healthy\"" ]; then
               echo "Container is healthy."
@@ -65,7 +73,7 @@ jobs:
             sleep 5
           done
           echo "Container did not become healthy in time."
-          docker logs picard-web-test
+          docker logs picard-web-test-${{ matrix.variant }}-${{ matrix.user.name }}
           exit 1
 
       - name: Build ARM64 Docker image (emulated)
@@ -76,12 +84,12 @@ jobs:
             -t picard-web:latest-arm .
 
       - name: Run ARM64 container (emulated)
-        run: docker run -d --platform linux/arm64 --name picard-web-test-arm picard-web:latest-arm
+        run: docker run -d --platform linux/arm64 ${{ matrix.user.user_args }} --name picard-web-test-${{ matrix.variant }}-${{ matrix.user.name }}-arm picard-web:${{ matrix.variant }}-arm
 
       - name: Wait for ARM64 healthcheck to pass
         run: |
           for i in {1..10}; do
-            STATUS=$(docker inspect --format='{{json .State.Health.Status}}' picard-web-test-arm)
+            STATUS=$(docker inspect --format='{{json .State.Health.Status}}' picard-web-test-${{ matrix.variant }}-${{ matrix.user.name }}-arm)
             echo "ARM health status: $STATUS"
             if [ "$STATUS" == "\"healthy\"" ]; then
               echo "ARM container is healthy."
@@ -90,5 +98,11 @@ jobs:
             sleep 5
           done
           echo "ARM container did not become healthy in time."
-          docker logs picard-web-test-arm
+          docker logs picard-web-test-${{ matrix.variant }}-${{ matrix.user.name }}-arm
           exit 1
+
+      - name: Remove test container
+        if: always()
+        run: |
+          docker rm -f picard-web-test-${{ matrix.variant }}-${{ matrix.user.name }} || true
+          docker rm -f picard-web-test-${{ matrix.variant }}-${{ matrix.user.name }}-arm || true

@@ -20,7 +20,7 @@ LABEL org.opencontainers.image.authors="Aandree5" \
     org.opencontainers.image.title="Picard Web" \
     org.opencontainers.image.description="Image to run MusicBrainz Picard in the browser"
 
-# Directories that must be writable by the runtime user.
+# Directories that must be writeable by the runtime user.
 ENV APP_DIRS="/picard-web"
 
 EXPOSE 5000
