@@ -56,7 +56,8 @@ jobs:
           docker buildx build --load \
             --cache-from type=gha,scope=amd64 \
             --cache-to type=gha,mode=max,scope=amd64 \
-            -t picard-web:latest .
+            --target ${{ matrix.variant }} \
+            -t picard-web:${{ matrix.variant }} .
 
       - name: Run container
         run: docker run -d ${{ matrix.user.user_args }} --name picard-web-test-${{ matrix.variant }}-${{ matrix.user.name }} picard-web:${{ matrix.variant }}
@@ -81,7 +82,8 @@ jobs:
           docker buildx build --platform linux/arm64 --load \
             --cache-from type=gha,scope=arm64 \
             --cache-to type=gha,mode=max,scope=arm64 \
-            -t picard-web:latest-arm .
+            --target ${{ matrix.variant }} \
+            -t picard-web:${{ matrix.variant }}-arm .
 
       - name: Run ARM64 container (emulated)
         run: docker run -d --platform linux/arm64 ${{ matrix.user.user_args }} --name picard-web-test-${{ matrix.variant }}-${{ matrix.user.name }}-arm picard-web:${{ matrix.variant }}-arm
