@@ -9,11 +9,18 @@ on:
   push:
     tags:
       - "v*.*.*"
+  workflow_call:
+    inputs:
+      tag:
+        description: 'Tag to deploy (e.g., v1.0.0)'
+        required: true
+        type: string
   workflow_dispatch:
     inputs:
       tag:
         description: 'Tag to deploy (e.g., v1.0.0)'
         required: true
+        type: string
 
 env:
   GHCR_REGISTRY: ghcr.io
@@ -37,6 +44,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
+        with:
+          ref: ${{ inputs.tag || github.ref }}
 
       - name: Set up QEMU (for emulation)
         uses: docker/setup-qemu-action@v4
@@ -84,9 +93,9 @@ jobs:
             latest=${{ matrix.variant == 'full' && 'auto' || 'false' }}
             prefix=${{ matrix.variant }}-,onlatest=false
           tags: |
-            type=semver,pattern=v{{version}}
-            type=semver,pattern=v{{major}}.{{minor}}
-            type=semver,pattern=v{{major}}
+            type=semver,pattern=v{{version}},value=${{ inputs.tag || github.ref_name }}
+            type=semver,pattern=v{{major}}.{{minor}},value=${{ inputs.tag || github.ref_name }}
+            type=semver,pattern=v{{major}},value=${{ inputs.tag || github.ref_name }}
 
       # Build and push Docker image with Buildx (don't push on PR)
       # https://github.com/docker/build-push-action
