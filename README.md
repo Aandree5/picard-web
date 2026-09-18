@@ -1,8 +1,10 @@
 # Picard Web
 
 <div align="center">
-  <img src="https://github.com/Aandree5/picard-web/blob/main/images/logo/logo_256.png?raw=true" alt="Logo" />
+  <!-- Use full URL to enable logo to show on mirror docker hub description -->
+  <img src="https://raw.githubusercontent.com/Aandree5/picard-web/9ecec122d932b6018d2000be7f9241bca4c64193/images/logo/logo.svg" alt="Logo"  width="256" />
 </div>
+ 
 
 ![Deploy Docker image](https://img.shields.io/github/actions/workflow/status/aandree5/picard-web/docker-deploy.yml?logoColor=white&label=Deploy%20Docker%20image&logo=github) 
 ![GitHub Release](https://img.shields.io/github/v/release/aandree5/picard-web?logoColor=white&color=teal&label=Release&logo=rocket) 
